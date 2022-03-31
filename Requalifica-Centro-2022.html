@@ -65,7 +65,7 @@
         }
 
         #logo {
-            position:absolute;
+            position: absolute;
             top: 5px;
             right: 10px;
             width: fit-content;
@@ -205,17 +205,20 @@
     <!--Cria o div da nota-->
     <div id='notas'>
         <b>Fontes:</b>
-        GeoSampa, Secretaria Municipal de Cultura, Secretaria Municipal da Fazenda, Secretaria Municipal de Urbanismo e
-        Licenciamento e LABCidade. Dados do IPTU 2022. <br>
-        Clique <a href = "dados/dados.zip">aqui</a> para baixar os dados utilizados em formato de tabelas e em formato vetorial (geopackage).
+        Destacamos que as informações utilizadas são do IPTU 2022 e da camada de lotes de Fev/2022. Já o 3D provém da
+        camada de edificações de 2008, por isso alterações posteriores as datas podem ser identificadas no mapa.
         
+        Clique <a href="dados/dados.zip">aqui</a> para baixar os dados utilizados em formato de tabelas e em formato
+        vetorial (geopackage).
+
     </div>
 
     <!--Cria o div do logo-->
     <div id='logo'>
-        
+
         <img src="logos/cidade_sp.svg" alt="logo cidade" width="141px" height="47px"><br>
-        <img src="logos/sp-urbanismo-fundo-claro.png" alt="logo spurbanismo" width="140px" height="51px" style="background-color:#fff">
+        <img src="logos/sp-urbanismo-fundo-claro.png" alt="logo spurbanismo" width="140px" height="51px"
+            style="background-color:#fff">
     </div>
 
     <!--Cria o div do 2D/3D-->
@@ -294,7 +297,7 @@
 
         <b>Número de Pavimentos:</b>
         <br>
-        <div style="background-color: #f2f0f7"></div>Terrenos<br>
+        <div style="background-color: #cfc6e3"></div>Terrenos<br>
         <div style="background-color: #9e9ac8"></div>Até 5<br>
         <div style="background-color: #756bb1"></div>Até 20<br>
         <div style="background-color: #54278f"></div>Acima de 20<br>
@@ -384,7 +387,7 @@
                     'fill-color': 'transparent',
                     //'fill-outline-color': '#717D7E',
                     'fill-opacity': 1.0,
-                    'fill-outline-color':'transparent',
+                    'fill-outline-color': 'transparent',
 
                 }
             });
@@ -419,7 +422,7 @@
                         '<b>Área Construída(m²):</b> ' + feature.properties.IPTU22_AreaConstruida.toLocaleString('pt-BR') + '<br>' +
                         '<b>Quantidade de Pavimentos:</b> ' + feature.properties.IPTU22_QtdPavimentos + '<br>' +
                         '<b>Coeficiente de Aproveitamento:</b> ' + feature.properties.IPTU22_CA + '<br>' +
-                        '<b>Tipologia:</b> ' + feature.properties.Tipologia.substring(0, 45) +'<br>' +
+                        '<b>Tipologia:</b> ' + feature.properties.Tipologia.substring(0, 45) + '<br>' +
                         '<b>PEUC:</b> ' + feature.properties.PEUC + '<br>' +
                         '<b>IPTU Progressivo:</b> ' + feature.properties.IPTU_Progressivo + '<br>' +
                         '<b>Tombado:</b> ' + feature.properties.Tombado + '<br>' +
@@ -485,13 +488,15 @@
                         'step',
                         ['get', 'IPTU22_QtdPavimentos'],
 
-                        '#f2f0f7', 1.0,
+                        '#cfc6e3', 1.0,
                         '#9e9ac8', 6.0,
                         '#756bb1', 19.0,
                         '#54278f'
 
 
                     ]
+
+
 
                 }
             });
@@ -522,6 +527,8 @@
                         ['==', ['get', 'Publico'], 'Sim'], '#fdc086',
                         'grey'
                     ],
+
+
                 }
             });
 
@@ -616,8 +623,8 @@
                         '#7491a0', 1050.0,
                         '#5b7887', 1100.0,
                         '#425f6f', 1150.0,
-                        '#2a4858', 
-                        
+                        '#2a4858',
+
 
                     ],
 
