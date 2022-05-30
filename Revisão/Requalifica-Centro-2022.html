@@ -332,8 +332,10 @@
 
         <b>Tombados:</b>
         <br>
-        <div style="background-color: #ea8c55"></div>Sim<br>
-        <div style="background-color: #7c9eaf"></div>Não<br>
+        <div style="background-color: #756bb1"></div>Sim<br>
+        <div style="background-color: #9ebcda"></div>Não<br>
+
+
 
     </div>
 
@@ -342,8 +344,9 @@
 
         <b>Único Dono:</b>
         <br>
-        <div style="background-color: #425f6f"></div>Sim<br>
-        <div style="background-color: #cacac3"></div>Não<br>
+        <div style="background-color: #ea8c55"></div>Sim<br>
+        <div style="background-color: #2c7fb8"></div>Não<br>
+
 
     </div>
 
@@ -600,8 +603,8 @@
                 'paint': {
                     'fill-color': [
                         'case',
-                        ['==', ['get', 'Tombado'], 'Sim'], '#ea8c55',
-                        '#7c9eaf'
+                        ['==', ['get', 'Tombado'], 'Sim'], '#756bb1',
+                        '#9ebcda'
 
                     ],
                 }
@@ -624,34 +627,31 @@
 
             map.addLayer({
                 'id': 'donos',
-                'type': 'fill-extrusion',
-                'source': 'edificios',
+                'type': 'fill',
+                'source': 'lotes',
                 'layout': { 'visibility': 'none' },
                 'paint': {
-                    'fill-extrusion-color': [
-                        'step',
-                        ['get', 'cores'],
-
-                        '#cacac3', 50.0,
-                        '#b1afa9', 132.0,
-                        '#7491a0', 1050.0,
-                        '#5b7887', 1100.0,
-                        '#425f6f', 1150.0,
-                        '#2a4858',
-
+                    'fill-color': [
+                        'case',
+                        ['==', ['get', 'UnicoDono'], 'Sim'], '#ea8c55',
+                        '#2c7fb8'
 
                     ],
-
-
-                    'fill-extrusion-height': {
-                        'type': 'identity',
-                        'property': 'height',
-                    },
-                    'fill-extrusion-opacity': 0.8,
-                    'fill-extrusion-base': 0,
-                    'fill-extrusion-vertical-gradient': true
                 }
             });
+
+            map.setPaintProperty('donos', 'fill-outline-color', [
+                'interpolate',
+                // Set the exponential rate of change to 0.5
+                ['exponential', 1.5],
+                ['zoom'],
+                // When zoom is 15, buildings will be beige.
+                14,
+                'transparent',
+                // When zoom is 18 or higher, buildings will be yellow.
+                20,
+                '#4a5355'
+            ]);
 
             //3D - Define o estilo dos edificios e adiciona a camada ao mapa
 
@@ -911,7 +911,7 @@
             //Donos
             document.getElementById('donos').addEventListener('click', function () {
                 map.flyTo({
-                    pitch: 60,
+                    pitch: 0,
                     //bearing: 0
                 });
                 //map.setLayoutProperty('lotes-2d', 'visibility', 'none');
