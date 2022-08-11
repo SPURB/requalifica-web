@@ -271,6 +271,7 @@
     <!--Cria o div da nota-->
     <div id="notas">
       <b>Notas:</b>
+      Para rotacionar o mapa clique e arraste utilizando o botão direito.
       As camadas contêm as informações sobre os lotes, já o 3D é uma
       representação da morfologia do perímetro.
       <b>Fontes: </b>GeoSampa, SMC, SMF (IPTU 2022) e SMUL (Lotes
@@ -539,6 +540,15 @@
                 "<br>" +
                 "<b>Tombado:</b> " +
                 feature.properties.Tombado +
+                "<br>" +
+                "<b>&nbsp;&nbsp;Municipal:</b> " + 
+                feature.properties.Municipal +
+                "<br>"+
+                "<b>&nbsp;&nbsp;Estadual:</b> " +
+                feature.properties.Estadual +
+                "<br>"+
+                "<b>&nbsp;&nbsp;Federal:</b> " +
+                feature.properties.Federal +
                 "<br>"
             )
             .addTo(map);
