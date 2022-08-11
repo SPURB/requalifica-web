@@ -307,6 +307,7 @@
         <button id='2D' class='btn'>Mapa 2D</button>
         <button id='3D' class='btn'> Mapa 3D </button> -->
       Camadas:
+      <button id="elegiveis" class="btn">Elegíveis</button>
       <button id="CA" class="btn">Aproveitamento</button>
       <button id="pavimentos" class="btn">Pavimentos</button>
       <button id="publicos" class="btn">Públicos</button>
@@ -826,13 +827,10 @@
             document.getElementById("tipologia_legenda").style.display = "none";
             document.getElementById("tombados_legenda").style.display = "none";
             document.getElementById("donos_legenda").style.display = "none";
+            map.setLayoutProperty("lotes-2d", "visibility", "visible");
             map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
             map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
-            map.setPaintProperty(
-              "lotes-2d",
-              "fill-outline-color",
-              "transparent"
-            ); //Deixa o 2d invisivel para o popup
+            map.setPaintProperty("lotes-2d", "fill-outline-color","transparent"); //Deixa o 2d invisivel para o popup
           } else {
             console.log("Checkbox is not checked..");
             map.flyTo({
@@ -872,6 +870,34 @@
               "#4a5355",
             ]);
           }
+        });
+
+        //Elegiveis
+        document.getElementById("elegiveis").addEventListener("click", function () {
+          map.flyTo({
+            pitch: 0,
+            //bearing: 0
+          });
+          //map.setLayoutProperty('lotes-2d', 'visibility', 'none');
+          map.setLayoutProperty("edificios-3d", "visibility", "none");
+          map.setLayoutProperty("CA", "visibility", "none");
+          map.setLayoutProperty("pavimentos", "visibility", "none");
+          map.setLayoutProperty("publicos", "visibility", "none");
+          map.setLayoutProperty("tipologia", "visibility", "none");
+          map.setLayoutProperty("tombados", "visibility", "none");
+          map.setLayoutProperty("donos", "visibility", "none");
+          document.getElementById("2d_legenda").style.display = "block";
+          document.getElementById("3d_legenda").style.display = "none";
+          document.getElementById("CA_legenda").style.display = "none";
+          document.getElementById("pavimentos_legenda").style.display = "none";
+          document.getElementById("publicos_legenda").style.display = "none";
+          document.getElementById("tipologia_legenda").style.display = "none";
+          document.getElementById("tombados_legenda").style.display = "none";
+          document.getElementById("donos_legenda").style.display = "none";
+          document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
+          map.setPaintProperty("lotes-2d", "fill-color", "#F4C029"); //Deixa o 2d invisivel para o popup
+          map.setPaintProperty("lotes-2d", "fill-opacity", 0.7); //Deixa o 2d invisivel para o popup
+          map.setPaintProperty("lotes-2d", "fill-outline-color", "transparent"); //Deixa o 2d invisivel para o popup
         });
 
         //CA
