@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.js"></script>
+    <link
+      href="https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://libs.cartocdn.com/carto-vl/v1.4.4/carto-vl.min.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      const map = new maplibregl.Map({
+        container: "map",
+        style: carto.basemaps.positron, // stylesheet location
+        center: [-46.63, -23.548], // starting position [lng, lat]
+        zoom: 13, // starting zoom
+      });
+
+      let hoveredStateId = null; //▒Declara a variavel para o hover
+
+      map.on("load", () => {
+        map.addSource("lotes", {
+          type: "geojson",
+          data: "dados/Lotes_Requalifica-IPTU-2022.geojson",
+          generateId: true, //Gera um id para os efeitos hover
+        });
+
+        //Carrega o geojson dos edificios
+        map.addSource("edificios", {
+          type: "geojson",
+          data: "dados/Edificios_OSM.geojson",
+          generateId: true, //Gera um id para os efeitos hover
+        });
+
+        map.addLayer({
+          id: "lotes-2d",
+          "z-index": 0,
+          type: "fill",
+          source: "lotes",
+          layout: {},
+          paint: {
+            "fill-color": "CornflowerBlue",
+            "fill-opacity": [
+              "case",
+              ["boolean", ["feature-state", "hover"], false],
+              1,
+              0,
+            ],
+          },
+        });
+
+        map.addLayer({
+          id: "edificios-3d",
+          type: "fill-extrusion",
+          source: "edificios",
+          layout: { visibility: "visible" },
+          paint: {
+            "fill-extrusion-color": [
+              "case",
+              ["boolean", ["feature-state", "hover"], false],
+              "#004C94",
+              "Linen",
+            ],
+            "fill-extrusion-height": {
+              type: "identity",
+              property: "height",
+            },
+            "fill-extrusion-opacity": 1,
+            "fill-extrusion-base": 0,
+            "fill-extrusion-vertical-gradient": true,
+          },
+        });
+
+      // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+        map.on("mousemove", "edificios-3d", (e) => {
+          //map.getCanvas().style.cursor = "pointer";
+          console.log(hoveredStateId);
+          if (e.features.length > 0) {
+            if (hoveredStateId !== undefined) {
+              map.setFeatureState(
+                { source: "edificios", id: hoveredStateId },
+                { hover: false }
+              );
+            }
+            hoveredStateId = e.features[0].id;
+            map.setFeatureState(
+              { source: "edificios", id: hoveredStateId },
+              { hover: true }
+            );
+          }
+        });
+
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on("mouseleave", "edificios-3d", () => {
+          map.getCanvas().style.cursor = "";
+          if (hoveredStateId !== undefined) {
+            map.setFeatureState(
+              { source: "edificios", id: hoveredStateId },
+              { hover: false }
+            );
+          }
+          hoveredStateId = null;
+        });
+
+
+        // Change the cursor to a pointer when the mouse is over the places layer.
+        map.on("mouseenter", "lotes-2d", function () {
+          map.getCanvas().style.cursor = "pointer";
+        });
+
+        // Change it back to a pointer when it leaves.
+        map.on("mouseleave", "lotes-2d", function () {
+          map.getCanvas().style.cursor = "";
+        });
+
+
+/*        // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+        map.on("mousemove", "lotes-2d", (e) => {
+          map.getCanvas().style.cursor = "pointer";
+          console.log(hoveredStateId);
+          if (e.features.length > 0) {
+            if (hoveredStateId !== undefined) {
+              map.setFeatureState(
+                { source: "lotes", id: hoveredStateId },
+                { hover: false }
+              );
+            }
+            hoveredStateId = e.features[0].id;
+            map.setFeatureState(
+              { source: "lotes", id: hoveredStateId },
+              { hover: true }
+            );
+          }
+        });
+
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on("mouseleave", "lotes-2d", () => {
+          map.getCanvas().style.cursor = "";
+          if (hoveredStateId !== undefined) {
+            map.setFeatureState(
+              { source: "lotes", id: hoveredStateId },
+              { hover: false }
+            );
+          }
+          hoveredStateId = null;
+        });
+*/
+
+      });
+    </script>
+  </body>
+</html>
