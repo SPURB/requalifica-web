@@ -271,9 +271,9 @@
     <!--Cria o div da nota-->
     <div id="notas">
       <b>Notas:</b>
-      Para rotacionar o mapa clique e arraste utilizando o botão direito.
-      As camadas contêm as informações sobre os lotes, já o 3D é uma
-      representação da morfologia do perímetro.
+      Para rotacionar o mapa clique e arraste utilizando o botão direito. As
+      camadas contêm as informações sobre os lotes, já o 3D é uma representação
+      da morfologia do perímetro.
       <b>Fontes: </b>GeoSampa, SMC, SMF (IPTU 2022) e SMUL (Lotes
       02-2022).Clique <a href="dados/dados.zip">aqui</a> para baixar os dados.
     </div>
@@ -383,10 +383,12 @@
     <div id="pavimentos_legenda" class="legendas" style="display: none">
       <b>Número de Pavimentos:</b>
       <br />
-      <div style="background-color: #cfc6e3"></div>
+      <div style="background-color: #dadaeb"></div>
       Terrenos<br />
-      <div style="background-color: #9e9ac8"></div>
+      <div style="background-color: #bcbddc"></div>
       Até 5<br />
+      <div style="background-color: #9e9ac8"></div>
+      Até 11<br />
       <div style="background-color: #756bb1"></div>
       Até 20<br />
       <div style="background-color: #54278f"></div>
@@ -542,12 +544,12 @@
                 "<b>Tombado:</b> " +
                 feature.properties.Tombado +
                 "<br>" +
-                "<b>&nbsp;&nbsp;Municipal:</b> " + 
+                "<b>&nbsp;&nbsp;Municipal:</b> " +
                 feature.properties.Municipal +
-                "<br>"+
+                "<br>" +
                 "<b>&nbsp;&nbsp;Estadual:</b> " +
                 feature.properties.Estadual +
-                "<br>"+
+                "<br>" +
                 "<b>&nbsp;&nbsp;Federal:</b> " +
                 feature.properties.Federal +
                 "<br>"
@@ -613,10 +615,12 @@
               "step",
               ["get", "QtdPavimentos"],
 
-              "#cfc6e3",
+              "#dadaeb",
               1.0,
-              "#9e9ac8",
+              "#bcbddc",
               6.0,
+              "#9e9ac8",
+              12.0,
               "#756bb1",
               19.0,
               "#54278f",
@@ -830,7 +834,11 @@
             map.setLayoutProperty("lotes-2d", "visibility", "visible");
             map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
             map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
-            map.setPaintProperty("lotes-2d", "fill-outline-color","transparent"); //Deixa o 2d invisivel para o popup
+            map.setPaintProperty(
+              "lotes-2d",
+              "fill-outline-color",
+              "transparent"
+            ); //Deixa o 2d invisivel para o popup
           } else {
             console.log("Checkbox is not checked..");
             map.flyTo({
@@ -873,32 +881,39 @@
         });
 
         //Elegiveis
-        document.getElementById("elegiveis").addEventListener("click", function () {
-          map.flyTo({
-            pitch: 0,
-            //bearing: 0
+        document
+          .getElementById("elegiveis")
+          .addEventListener("click", function () {
+            map.flyTo({
+              pitch: 0,
+              //bearing: 0
+            });
+            //map.setLayoutProperty('lotes-2d', 'visibility', 'none');
+            map.setLayoutProperty("edificios-3d", "visibility", "none");
+            map.setLayoutProperty("CA", "visibility", "none");
+            map.setLayoutProperty("pavimentos", "visibility", "none");
+            map.setLayoutProperty("publicos", "visibility", "none");
+            map.setLayoutProperty("tipologia", "visibility", "none");
+            map.setLayoutProperty("tombados", "visibility", "none");
+            map.setLayoutProperty("donos", "visibility", "none");
+            document.getElementById("2d_legenda").style.display = "block";
+            document.getElementById("3d_legenda").style.display = "none";
+            document.getElementById("CA_legenda").style.display = "none";
+            document.getElementById("pavimentos_legenda").style.display =
+              "none";
+            document.getElementById("publicos_legenda").style.display = "none";
+            document.getElementById("tipologia_legenda").style.display = "none";
+            document.getElementById("tombados_legenda").style.display = "none";
+            document.getElementById("donos_legenda").style.display = "none";
+            document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
+            map.setPaintProperty("lotes-2d", "fill-color", "#F4C029"); //Deixa o 2d invisivel para o popup
+            map.setPaintProperty("lotes-2d", "fill-opacity", 0.7); //Deixa o 2d invisivel para o popup
+            map.setPaintProperty(
+              "lotes-2d",
+              "fill-outline-color",
+              "transparent"
+            ); //Deixa o 2d invisivel para o popup
           });
-          //map.setLayoutProperty('lotes-2d', 'visibility', 'none');
-          map.setLayoutProperty("edificios-3d", "visibility", "none");
-          map.setLayoutProperty("CA", "visibility", "none");
-          map.setLayoutProperty("pavimentos", "visibility", "none");
-          map.setLayoutProperty("publicos", "visibility", "none");
-          map.setLayoutProperty("tipologia", "visibility", "none");
-          map.setLayoutProperty("tombados", "visibility", "none");
-          map.setLayoutProperty("donos", "visibility", "none");
-          document.getElementById("2d_legenda").style.display = "block";
-          document.getElementById("3d_legenda").style.display = "none";
-          document.getElementById("CA_legenda").style.display = "none";
-          document.getElementById("pavimentos_legenda").style.display = "none";
-          document.getElementById("publicos_legenda").style.display = "none";
-          document.getElementById("tipologia_legenda").style.display = "none";
-          document.getElementById("tombados_legenda").style.display = "none";
-          document.getElementById("donos_legenda").style.display = "none";
-          document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
-          map.setPaintProperty("lotes-2d", "fill-color", "#F4C029"); //Deixa o 2d invisivel para o popup
-          map.setPaintProperty("lotes-2d", "fill-opacity", 0.7); //Deixa o 2d invisivel para o popup
-          map.setPaintProperty("lotes-2d", "fill-outline-color", "transparent"); //Deixa o 2d invisivel para o popup
-        });
 
         //CA
         document.getElementById("CA").addEventListener("click", function () {
