@@ -455,6 +455,8 @@
         })
       );
 
+      let hoveredStateId = null; //▒Declara a variavel para o hover
+
       //Função para esperar carregar o mapa antes de carregar os elementos
       map.on("load", () => {
         //Carrega o geojson dos lotes
@@ -467,6 +469,7 @@
         map.addSource("edificios", {
           type: "geojson",
           data: "dados/Edificios_OSM.geojson",
+          generateId: true, //Gera um id para os efeitos hover
         });
 
         //Define o estilo dos lotes e adiciona a camada 2D ao mapa
@@ -777,7 +780,10 @@
           layout: { visibility: "visible" },
           paint: {
             "fill-extrusion-color": [
-              "step",
+              "case",
+              ["boolean", ["feature-state", "hover"], false],
+              "#FF8C00",
+              ["step",
               ["get", "height"],
 
               "#c5e1ee",
@@ -793,7 +799,7 @@
               "#425f6f",
               80.0,
               "#2a4858",
-            ],
+            ]],
 
             "fill-extrusion-height": {
               type: "identity",
@@ -803,6 +809,41 @@
             "fill-extrusion-base": 0,
             "fill-extrusion-vertical-gradient": true,
           },
+        });
+
+        //Configura o hover para o 3D
+         // When the user moves their mouse over the state-fill layer, we'll update the
+        // feature state for the feature under the mouse.
+       
+        map.on("mousemove", "edificios-3d", (e) => {
+          //map.getCanvas().style.cursor = "pointer";
+          console.log(hoveredStateId);
+          if (e.features.length > 0) {
+            if (hoveredStateId !== undefined) {
+              map.setFeatureState(
+                { source: "edificios", id: hoveredStateId },
+                { hover: false }
+              );
+            }
+            hoveredStateId = e.features[0].id;
+            map.setFeatureState(
+              { source: "edificios", id: hoveredStateId },
+              { hover: true }
+            );
+          }
+        });
+
+        // When the mouse leaves the state-fill layer, update the feature state of the
+        // previously hovered feature.
+        map.on("mouseleave", "edificios-3d", () => {
+          map.getCanvas().style.cursor = "";
+          if (hoveredStateId !== undefined) {
+            map.setFeatureState(
+              { source: "edificios", id: hoveredStateId },
+              { hover: false }
+            );
+          }
+          hoveredStateId = null;
         });
 
         // Configura a ação nos botões das camadas
