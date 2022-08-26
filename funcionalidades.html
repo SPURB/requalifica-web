@@ -49,7 +49,7 @@
         //Carrega o geojson dos edificios
         map.addSource("edificios", {
           type: "geojson",
-          data: "dados/Edificios_OSM.geojson",
+          data: "dados/Edificios_OSM_dev.geojson",
           generateId: true, //Gera um id para os efeitos hover
         });
 
@@ -96,10 +96,12 @@
               "#425f6f",
               80.0,
               "#2a4858",
-            ]],
+              998.0,
+              "#F5F5F5"
+              ]],
             "fill-extrusion-height": {
               type: "identity",
-              property: "height",
+              property: "altura",
             },
             "fill-extrusion-opacity": 1,
             "fill-extrusion-base": 0,
