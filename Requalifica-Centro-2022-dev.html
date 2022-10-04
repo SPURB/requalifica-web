@@ -474,7 +474,7 @@
         //Carrega o geojson dos lotes
         map.addSource("lotes", {
           type: "geojson",
-          data: "dados/Lotes_Requalifica-IPTU-2022.geojson",
+          data: "dados/Lotes_Requalifica-IPTU-2022_teste.geojson",
         });
 
         //Carrega o geojson dos edificios
@@ -569,7 +569,12 @@
                 "<br>" +
                 "<b>&nbsp;&nbsp;Federal:</b> " +
                 feature.properties.Federal +
+                "<br>" +
+                "<b>&nbsp;&nbsp;Link para resolução:</b> " + "<a href="+feature.properties.ResolucaoLink+">"+ feature.properties.Resolucao + "</a>"
+
+                 +
                 "<br>"
+                
             )
             .addTo(map);
         });
