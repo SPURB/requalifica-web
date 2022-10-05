@@ -343,6 +343,36 @@ map.on("load", () => {
     "#4a5355",
   ]);
 
+    //Define o estilo dos lotes e adiciona a camada dos Licenciados ao mapa
+
+    map.addLayer({
+      id: "licenciados",
+      type: "fill",
+      source: "lotes",
+      layout: { visibility: "none" },
+      paint: {
+        "fill-color": [
+          "case",
+          ["==", ["get", "Licenciado"], "Sim"],
+          "#2c7fb8",
+          "#9ebcda",
+        ],
+      },
+    });
+  
+    map.setPaintProperty("licenciados", "fill-outline-color", [
+      "interpolate",
+      // Set the exponential rate of change to 0.5
+      ["exponential", 1.5],
+      ["zoom"],
+      // When zoom is 15, buildings will be beige.
+      14,
+      "transparent",
+      // When zoom is 18 or higher, buildings will be yellow.
+      20,
+      "#4a5355",
+    ]);
+
   //3D - Define o estilo dos edificios e adiciona a camada ao mapa
 
   map.addLayer({
@@ -440,6 +470,7 @@ map.on("load", () => {
       map.setLayoutProperty("tipologia", "visibility", "none");
       map.setLayoutProperty("tombados", "visibility", "none");
       map.setLayoutProperty("donos", "visibility", "none");
+      map.setLayoutProperty("licenciados", "visibility", "none");
       document.getElementById("2d_legenda").style.display = "none";
       document.getElementById("3d_legenda").style.display = "block";
       document.getElementById("CA_legenda").style.display = "none";
@@ -449,6 +480,7 @@ map.on("load", () => {
       document.getElementById("tipologia_legenda").style.display = "none";
       document.getElementById("tombados_legenda").style.display = "none";
       document.getElementById("donos_legenda").style.display = "none";
+      document.getElementById("licenciados_legenda").style.display = "none";
       map.setLayoutProperty("lotes-2d", "visibility", "visible");
       map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
       map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
@@ -471,6 +503,7 @@ map.on("load", () => {
       map.setLayoutProperty("tipologia", "visibility", "none");
       map.setLayoutProperty("tombados", "visibility", "none");
       map.setLayoutProperty("donos", "visibility", "none");
+      map.setLayoutProperty("licenciados", "visibility", "none");
       document.getElementById("2d_legenda").style.display = "block";
       document.getElementById("3d_legenda").style.display = "none";
       document.getElementById("CA_legenda").style.display = "none";
@@ -480,6 +513,7 @@ map.on("load", () => {
       document.getElementById("tipologia_legenda").style.display = "none";
       document.getElementById("tombados_legenda").style.display = "none";
       document.getElementById("donos_legenda").style.display = "none";
+      document.getElementById("licenciados_legenda").style.display = "none";
       map.setPaintProperty("lotes-2d", "fill-color", "#F4C029"); //Deixa o 2d invisivel para o popup
       map.setPaintProperty("lotes-2d", "fill-opacity", 0.7); //Deixa o 2d invisivel para o popup
       //map.setPaintProperty('lotes-2d', 'fill-outline-color', '#717D7E'); //Deixa o 2d invisivel para o popup
@@ -514,6 +548,7 @@ map.on("load", () => {
       map.setLayoutProperty("tipologia", "visibility", "none");
       map.setLayoutProperty("tombados", "visibility", "none");
       map.setLayoutProperty("donos", "visibility", "none");
+      map.setLayoutProperty("licenciados", "visibility", "none");
       document.getElementById("2d_legenda").style.display = "block";
       document.getElementById("3d_legenda").style.display = "none";
       document.getElementById("CA_legenda").style.display = "none";
@@ -523,6 +558,7 @@ map.on("load", () => {
       document.getElementById("tipologia_legenda").style.display = "none";
       document.getElementById("tombados_legenda").style.display = "none";
       document.getElementById("donos_legenda").style.display = "none";
+      document.getElementById("licenciados_legenda").style.display = "none";
       document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
       map.setPaintProperty("lotes-2d", "fill-color", "#F4C029"); //Deixa o 2d invisivel para o popup
       map.setPaintProperty("lotes-2d", "fill-opacity", 0.7); //Deixa o 2d invisivel para o popup
@@ -547,6 +583,7 @@ map.on("load", () => {
     map.setLayoutProperty("tipologia", "visibility", "none");
     map.setLayoutProperty("tombados", "visibility", "none");
     map.setLayoutProperty("donos", "visibility", "none");
+    map.setLayoutProperty("licenciados", "visibility", "none");
     document.getElementById("2d_legenda").style.display = "none";
     document.getElementById("3d_legenda").style.display = "none";
     document.getElementById("CA_legenda").style.display = "block";
@@ -555,6 +592,7 @@ map.on("load", () => {
     document.getElementById("tipologia_legenda").style.display = "none";
     document.getElementById("tombados_legenda").style.display = "none";
     document.getElementById("donos_legenda").style.display = "none";
+    document.getElementById("licenciados_legenda").style.display = "none";
     document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
     map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
     map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
@@ -577,6 +615,7 @@ map.on("load", () => {
       map.setLayoutProperty("tipologia", "visibility", "none");
       map.setLayoutProperty("tombados", "visibility", "none");
       map.setLayoutProperty("donos", "visibility", "none");
+      map.setLayoutProperty("licenciados", "visibility", "none");
       document.getElementById("2d_legenda").style.display = "none";
       document.getElementById("3d_legenda").style.display = "none";
       document.getElementById("CA_legenda").style.display = "none";
@@ -586,6 +625,7 @@ map.on("load", () => {
       document.getElementById("tipologia_legenda").style.display = "none";
       document.getElementById("tombados_legenda").style.display = "none";
       document.getElementById("donos_legenda").style.display = "none";
+      document.getElementById("licenciados_legenda").style.display = "none";
       document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
       map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
       map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
@@ -611,6 +651,7 @@ map.on("load", () => {
       map.setLayoutProperty("tipologia", "visibility", "none");
       map.setLayoutProperty("tombados", "visibility", "none");
       map.setLayoutProperty("donos", "visibility", "none");
+      map.setLayoutProperty("licenciados", "visibility", "none");
       document.getElementById("2d_legenda").style.display = "none";
       document.getElementById("3d_legenda").style.display = "none";
       document.getElementById("CA_legenda").style.display = "none";
@@ -620,6 +661,7 @@ map.on("load", () => {
       document.getElementById("tipologia_legenda").style.display = "none";
       document.getElementById("tombados_legenda").style.display = "none";
       document.getElementById("donos_legenda").style.display = "none";
+      document.getElementById("licenciados_legenda").style.display = "none";
       document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
       map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
       map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
@@ -646,6 +688,7 @@ map.on("load", () => {
       map.setLayoutProperty("tipologia", "visibility", "visible");
       map.setLayoutProperty("tombados", "visibility", "none");
       map.setLayoutProperty("donos", "visibility", "none");
+      map.setLayoutProperty("licenciados", "visibility", "none");
       document.getElementById("2d_legenda").style.display = "none";
       document.getElementById("3d_legenda").style.display = "none";
       document.getElementById("CA_legenda").style.display = "none";
@@ -656,6 +699,7 @@ map.on("load", () => {
         "block";
       document.getElementById("tombados_legenda").style.display = "none";
       document.getElementById("donos_legenda").style.display = "none";
+      document.getElementById("licenciados_legenda").style.display = "none";
       document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
       map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
       map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
@@ -682,6 +726,7 @@ map.on("load", () => {
       map.setLayoutProperty("tipologia", "visibility", "none");
       map.setLayoutProperty("tombados", "visibility", "visible");
       map.setLayoutProperty("donos", "visibility", "none");
+      map.setLayoutProperty("licenciados", "visibility", "none");
       document.getElementById("2d_legenda").style.display = "none";
       document.getElementById("3d_legenda").style.display = "none";
       document.getElementById("CA_legenda").style.display = "none";
@@ -691,6 +736,7 @@ map.on("load", () => {
       document.getElementById("tipologia_legenda").style.display = "none";
       document.getElementById("tombados_legenda").style.display = "block";
       document.getElementById("donos_legenda").style.display = "none";
+      document.getElementById("licenciados_legenda").style.display = "none";
       document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
       map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
       map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
@@ -715,6 +761,7 @@ map.on("load", () => {
     map.setLayoutProperty("tipologia", "visibility", "none");
     map.setLayoutProperty("tombados", "visibility", "none");
     map.setLayoutProperty("donos", "visibility", "visible");
+    map.setLayoutProperty("licenciados", "visibility", "none");
     document.getElementById("2d_legenda").style.display = "none";
     document.getElementById("3d_legenda").style.display = "none";
     document.getElementById("CA_legenda").style.display = "none";
@@ -723,11 +770,42 @@ map.on("load", () => {
     document.getElementById("tipologia_legenda").style.display = "none";
     document.getElementById("tombados_legenda").style.display = "none";
     document.getElementById("donos_legenda").style.display = "block";
+    document.getElementById("licenciados_legenda").style.display = "none";
     document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
     map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
     map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
     map.setPaintProperty("lotes-2d", "fill-outline-color", "transparent"); //Deixa o 2d invisivel para o popup
   });
+
+    //Licenciados
+    document.getElementById("licenciados").addEventListener("click", function () {
+      map.flyTo({
+        pitch: 0,
+        //bearing: 0
+      });
+      //map.setLayoutProperty('lotes-2d', 'visibility', 'none');
+      map.setLayoutProperty("edificios-3d", "visibility", "none");
+      map.setLayoutProperty("CA", "visibility", "none");
+      map.setLayoutProperty("pavimentos", "visibility", "none");
+      map.setLayoutProperty("publicos", "visibility", "none");
+      map.setLayoutProperty("tipologia", "visibility", "none");
+      map.setLayoutProperty("tombados", "visibility", "none");
+      map.setLayoutProperty("donos", "visibility", "none");
+      map.setLayoutProperty("licenciados", "visibility", "visible");
+      document.getElementById("2d_legenda").style.display = "none";
+      document.getElementById("3d_legenda").style.display = "none";
+      document.getElementById("CA_legenda").style.display = "none";
+      document.getElementById("pavimentos_legenda").style.display = "none";
+      document.getElementById("publicos_legenda").style.display = "none";
+      document.getElementById("tipologia_legenda").style.display = "none";
+      document.getElementById("tombados_legenda").style.display = "none";
+      document.getElementById("donos_legenda").style.display = "none";
+      document.getElementById("licenciados_legenda").style.display = "block";
+      document.getElementById("alterna3d-btn").checked = false; //Desabilita o checkbox para o 3d aparecer desabilitado
+      map.setPaintProperty("lotes-2d", "fill-color", "transparent"); //Deixa o 2d invisivel para o popup
+      map.setPaintProperty("lotes-2d", "fill-opacity", 1.0); //Deixa o 2d invisivel para o popup
+      map.setPaintProperty("lotes-2d", "fill-outline-color", "transparent"); //Deixa o 2d invisivel para o popup
+    });
 
   // Add zoom and rotation controls to the map.
   //map.addControl(new maplibregl.NavigationControl({showZoom = false}),'bottom-right');
