@@ -126,8 +126,10 @@ map.on("load", () => {
           feature.properties.Federal +
           "<br>" +
           "<b>&nbsp;&nbsp;Link para resolução:</b> " + "<a href="+feature.properties.ResolucaoLink+">"+ feature.properties.Resolucao + "</a>"
-
            +
+          "<br>" +
+          "<b>Licenciado:</b> " +
+          feature.properties.Licenciados +
           "<br>"
           
       )
