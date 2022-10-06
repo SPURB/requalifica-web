@@ -357,7 +357,7 @@ map.on("load", () => {
           "case",
           ["==", ["get", "Licenciado"], "Sim"],
           "#2c7fb8",
-          "#9ebcda",
+          "#bbd0e4",
         ],
       },
     });
