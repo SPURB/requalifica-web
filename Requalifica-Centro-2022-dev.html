@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>Requalifica Centro</title>
+
+    <link rel="stylesheet" href="scripts/estilo.css">
+
+    <meta name="title" content="Requalifica Centro" />
+    <meta
+      name="description"
+      content="O Mapa 3D do Programa Requalifica Centro permite a consulta da localização e informações gerais dos imóveis elegíveis para o programa de retrofit na cidade."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://spurb.github.io/requalifica-web/Requalifica-Centro-2022.html"
+    />
+    <meta property="og:title" content="Requalifica Centro" />
+    <meta
+      property="og:description"
+      content="O Mapa 3D do Programa Requalifica Centro permite a consulta da localização e informações gerais dos imóveis elegíveis para o programa de retrofit na cidade."
+    />
+    <meta
+      property="og:image"
+      content="https://spurb.github.io/requalifica-web/logos/requalificacentro.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://spurb.github.io/requalifica-web/Requalifica-Centro-2022.html"
+    />
+    <meta property="twitter:title" content="Requalifica Centro" />
+    <meta
+      property="twitter:description"
+      content="O Mapa 3D do Programa Requalifica Centro permite a consulta da localização e informações gerais dos imóveis elegíveis para o programa de retrofit na cidade."
+    />
+    <meta
+      property="twitter:image"
+      content="https://spurb.github.io/requalifica-web/logos/requalificacentro.jpg"
+    />
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-T4C7KJM7W3"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-T4C7KJM7W3");
+    </script>
+
+    <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
+    <link
+      href="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://libs.cartocdn.com/carto-vl/v1.4.4/carto-vl.min.js"></script>
+
+    <script>
+      function share() {
+        if (navigator.share !== undefined) {
+          navigator
+            .share({
+              title: "Requalifica Centro",
+              text: "O Mapa 3D do Programa Requalifica Centro permite a consulta a localização e informações gerais dos imóveis elegíveis para o programa de retrofit na cidade.",
+              url: "https://spurb.github.io/requalifica-web/Requalifica-Centro-2022.html",
+            })
+            .then(() => console.log("Successful share"))
+            .catch((error) => console.log("Error sharing", error));
+        }
+      }
+    </script>
+
+
+  </head>
+
+  <body>
+    <!--Cria o div do mapa -->
+    <div id="map"></div>
+
+    <!--Cria o div do titulo-->
+    <div id="titulo">Requalifica Centro</div>
+
+    <!--Cria o div da nota-->
+    <div id="notas">
+      <b>Notas:</b>
+      Para rotacionar o mapa clique e arraste utilizando o botão direito. Clique na base do 3D para obter as informações sobre o lote.As
+      camadas contêm as informações sobre os lotes, já o 3D é uma representação
+      da morfologia do perímetro.
+      <b>Fontes: </b>GeoSampa, SMC, SMF (IPTU 2022) e SMUL (Lotes
+      02-2022).Clique <a href="dados/dados.zip">aqui</a> para baixar os dados.
+    </div>
+
+    <!--Cria o div do logo-->
+    <div id="logo">
+      <img
+        src="logos/cidade_sp.svg"
+        alt="logo cidade"
+        width="141px"
+        height="47px"
+      /><br />
+      <img
+      src="logos/logo_smul.gif"
+      alt="logo spurbanismo"
+      width="140px"
+      height="51px"
+      style="background-color: #fff"
+    /><br />
+      <img
+        src="logos/sp-urbanismo-fundo-claro.png"
+        alt="logo spurbanismo"
+        width="140px"
+        height="51px"
+        style="background-color: #fff"
+      />
+    </div>
+
+    <!--Cria o div do 2D/3D-->
+    <div id="alterna3d">
+      Mapa 3D:
+      <input id="alterna3d-btn" type="checkbox" name="checkbox" />
+    </div>
+    <!--Cria o div dos botões das camadas-->
+
+    <div class="bt-container">
+      <!--
+        <button id='2D' class='btn'>Mapa 2D</button>
+        <button id='3D' class='btn'> Mapa 3D </button> -->
+      Camadas:
+      <button id="elegiveis" class="btn">Elegíveis</button>
+      <button id="CA" class="btn">Aproveitamento</button>
+      <button id="pavimentos" class="btn">Pavimentos</button>
+      <button id="publicos" class="btn">Públicos</button>
+      <button id="tipologia" class="btn">Tipologia</button>
+      <button id="tombados" class="btn">Tombados</button>
+      <button id="donos" class="btn">Único Dono</button>
+      <button id="licenciados" class="btn">Licenciados</button>
+    </div>
+
+    <div id="share-bt">
+      <a href="javascript:void(0)" onclick="share()">
+        <img width="32" height="32" src="logos/share.svg" alt="" />
+      </a>
+    </div>
+
+    <!--Cria a div das legendas -->
+
+    <!--Legenda do 2D -->
+    <div id="2d_legenda" class="legendas" style="display: none">
+      <div style="background-color: #f4c029"></div>
+      Imóveis Elegíveis<br />
+    </div>
+
+    <!--Legenda do 3D -->
+    <div id="3d_legenda" class="legendas" style="display: visble">
+      <b>Altura em m:</b>
+      <br />
+      <div style="background-color: #c5e1ee"></div>
+      Terrenos<br />
+      <div style="background-color: #a9c6d3"></div>
+      Até 10<br />
+      <div style="background-color: #8eabb9"></div>
+      Até 20<br />
+      <div style="background-color: #7491a0"></div>
+      Até 40<br />
+      <div style="background-color: #5b7887"></div>
+      Até 60<br />
+      <div style="background-color: #425f6f"></div>
+      Até 80<br />
+      <div style="background-color: #2a4858"></div>
+      Acima de 100<br />
+      <div style="background-color: #F5F5F5"></div>
+      Não Elegíveis<br />
+
+      
+    </div>
+
+    <!--Legenda do CA -->
+    <div id="CA_legenda" class="legendas" style="display: none">
+      <b
+        >Coeficiente de<br />
+        Aproveitamento:</b
+      >
+      <br />
+      <div style="background-color: #f2fac8"></div>
+      Até 1<br />
+      <div style="background-color: #c7e9b4"></div>
+      Até 2<br />
+      <div style="background-color: #7fcdbb"></div>
+      Até 4<br />
+      <div style="background-color: #41b6c4"></div>
+      Até 6<br />
+      <div style="background-color: #2c7fb8"></div>
+      Até 12<br />
+      <div style="background-color: #253494"></div>
+      Acima de 12<br />
+    </div>
+
+    <!--Legenda dos Imóveis Públicos -->
+    <div id="publicos_legenda" class="legendas" style="display: none">
+      <b>Imóveis Públicos:</b>
+      <br />
+      <div style="background-color: #fdc086"></div>
+      Sim<br />
+      <div style="background-color: #beaed4"></div>
+      Não<br />
+    </div>
+
+    <!--Legenda do números de pavimentos -->
+    <div id="pavimentos_legenda" class="legendas" style="display: none">
+      <b>Número de Pavimentos:</b>
+      <br />
+      <div style="background-color: #dadaeb"></div>
+      Terrenos<br />
+      <div style="background-color: #bcbddc"></div>
+      Até 5<br />
+      <div style="background-color: #9e9ac8"></div>
+      Até 14<br />
+      <div style="background-color: #756bb1"></div>
+      Até 20<br />
+      <div style="background-color: #54278f"></div>
+      Acima de 20<br />
+    </div>
+
+    <!--Legenda da tipologia -->
+    <div id="tipologia_legenda" class="legendas" style="display: none">
+      <b>Tipologia:</b>
+      <br />
+      <div style="background-color: #ef8a62"></div>
+      Residenciais<br />
+      <div style="background-color: #67a9cf"></div>
+      Não Residenciais<br />
+      <div style="background-color: #7fbf7b"></div>
+      Uso Misto<br />
+      <div style="background-color: #756bb1"></div>
+      Terrenos<br />
+    </div>
+
+    <!--Legenda dos tombados -->
+    <div id="tombados_legenda" class="legendas" style="display: none">
+      <b>Tombados:</b>
+      <br />
+      <div style="background-color: #756bb1"></div>
+      Sim<br />
+      <div style="background-color: #9ebcda"></div>
+      Não<br />
+    </div>
+
+    <!--Legenda do unico dono -->
+    <div id="donos_legenda" class="legendas" style="display: none">
+      <b>Único Dono:</b>
+      <br />
+      <div style="background-color: #ea8c55"></div>
+      Sim<br />
+      <div style="background-color: #2c7fb8"></div>
+      Não<br />
+    </div>
+
+        <!--Legenda dos licenciados -->
+        <div id="licenciados_legenda" class="legendas" style="display: none">
+          <b>Licenciados:</b>
+          <br />
+          <div style="background-color: #2c7fb8"></div>
+          Sim<br />
+          <div style="background-color: #bbd0e4"></div>
+          Não<br />
+        </div>
+
+
+
+    <script src="scripts/script.js"></script>
+    
+  </body>
+</html>
