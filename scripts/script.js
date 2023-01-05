@@ -901,8 +901,8 @@ map.on("load", () => {
     //Licenciados_3D
     document.getElementById("licenciados_3d").addEventListener("click", function () {
       map.flyTo({
-        pitch: 0,
-        //bearing: 0
+        pitch: 60,
+        //bearing: -10
       });
       //map.setLayoutProperty('lotes-2d', 'visibility', 'none');
       map.setLayoutProperty("edificios-3d", "visibility", "none");
