@@ -131,7 +131,7 @@
 
     <!--Cria o div do 2D/3D-->
     <div id="alterna3d">
-      Mapa 3D:
+      Monitoramento 3D:
       <input id="alterna3d-btn" type="checkbox" name="checkbox" />
     </div>
     <!--Cria o div dos botões das camadas-->
@@ -141,15 +141,18 @@
         <button id='2D' class='btn'>Mapa 2D</button>
         <button id='3D' class='btn'> Mapa 3D </button> -->
       Camadas:
-      <button id="elegiveis" class="btn">Elegíveis</button>
+      
       <button id="CA" class="btn">Aproveitamento</button>
+      <button id="elegiveis" class="btn">Elegíveis</button>
+      <button id="gabarito" class="btn">Gabarito</button>
+      <button id="licenciados" class="btn">Licenciados</button>
+      <button id="licenciados_3d" class="btn">Monitoramento</button>
       <button id="pavimentos" class="btn">Pavimentos</button>
       <button id="publicos" class="btn">Públicos</button>
       <button id="tipologia" class="btn">Tipologia</button>
       <button id="tombados" class="btn">Tombados</button>
       <button id="donos" class="btn">Único Dono</button>
-      <button id="licenciados" class="btn">Licenciados</button>
-      <button id="licenciados_3d" class="btn">Licenciados Retrofit</button>
+            
     </div>
 
     <div id="share-bt">
@@ -167,7 +170,7 @@
     </div>
 
     <!--Legenda do 3D -->
-    <div id="3d_legenda" class="legendas" style="display: visible">
+    <div id="3d_legenda" class="legendas" style="display: none">
       <b>Altura em m:</b>
       <br />
       <div style="background-color: #c5e1ee"></div>
@@ -282,7 +285,7 @@
         </div>
 
                 <!--Legenda dos licenciados em 3D -->
-                <div id="licenciados_3d_legenda" class="legendas" style="display: none">
+                <div id="licenciados_3d_legenda" class="legendas" style="display: visible">
                   <b>Licenciamento:</b>
                   <br />
                   <div style="background-color: #bbd0e4"></div>
